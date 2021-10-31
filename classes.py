@@ -94,6 +94,41 @@ class ParkingLot:
         return self.length
 
 
+class TaggedLot:
+    def __init__(self, num):
+        self.places = [0] * num
+        self.cars = []
+        self.length = num * 6.5
+
+    def check_place(self, car, place, same_dist=0):
+        if self.places[place]:
+            return []
+        return [place * 6.5, place * 6.5]
+
+    def take_place(self, car, position):
+        for i in range(len(self.places)):
+            if position == i * 6.5:
+                self.places[i] = 1
+                self.cars.append(car)
+                car.set_start(i)
+                return 1
+        return 0
+
+    def remove_car(self, car_i):
+        car_i = car_i % len(self.cars)
+        self.places[self.cars[car_i].get_start()] = 0
+        self.cars.pop(car_i)
+
+    def get_places(self):
+        return self.places
+
+    def get_cars(self):
+        return self.cars
+
+    def get_len(self):
+        return self.length
+
+
 class BadCodeError(Exception):
     def __init__(self):
         pass

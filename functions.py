@@ -141,3 +141,7 @@ def optimal_timeless_park_to_target(car, lot, target, same_dist=0, c=1):
             raise BadCodeError
     else:
         return 0
+
+
+def remove_car(lot, index):
+    lot.remove_car(index)
