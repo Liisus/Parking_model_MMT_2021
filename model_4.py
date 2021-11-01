@@ -9,6 +9,7 @@ f = open('model_4.txt', 'w')
 
 for k in range(1000):
     parking_length = randint(25, 130)
+    coeff = parking_length / 69
     car_len = [3.7, 4.8]
     car_wid = [1.5, 1.8]
 
@@ -64,7 +65,7 @@ for k in range(1000):
             for interval in intervals:
                 if interval[0] <= j <= interval[1] or (interval[1] < interval[0] and
                                                        (interval[0] <= j or interval[1] >= j)):
-                    if randint(0, 100000) / 100000 <= interval[4]:
+                    if randint(0, 100000) / 100000 <= interval[4] * coeff:
 
                         temp_car = Car(randint(round(car_len[0] * 10), round(car_len[1] * 10)) / 10,
                                        randint(round(car_wid[0] * 10), round(car_wid[1] * 10)) / 10,
