@@ -8,8 +8,8 @@ counter = 0
 f = open('model_5.txt', 'w')
 
 for k in range(500):
-    cap = randint(2, 13) * 2
-    parking_length = 13 * cap // 2
+    cap = randint(2, 11) * 2
+    parking_length = 11 * cap // 2
     coeff = parking_length / 69
     car_len = [3.7, 4.8]
     car_wid = [1.5, 1.8]

@@ -82,7 +82,7 @@ class ParkingLot:
         return 0
 
     def remove_car(self, car_i):
-        if self.places[car_i][1] + self.places[car_i + 1][1] >=\
+        if self.places[car_i][1] + self.places[car_i + 1][1] >= \
                 r_2(self.cars[car_i].get_width()) or car_i in {0, len(self.cars) - 1}:
             car_i = car_i % len(self.cars)
             self.places = self.places[:car_i] + \
@@ -115,15 +115,28 @@ class TaggedLot:
     def check_place(self, car, place, same_dist=0):
         if self.places[place]:
             return []
+        if ((self.places[place - 1] != 0) and self.places[(place + 1) % len(self.places)] != 0 and
+                place not in {0, len(self.places) - 1}):
+            if (2 * self.tag - self.places[place - 1].get_len() - self.places[place + 1].get_len() <
+                    2 * car.get_width()):
+                return []
         return [place * self.tag, place * self.tag]
 
     def take_place(self, car, position):
         for i in range(len(self.places)):
             if position == i * self.tag:
-                self.places[i] = car
-                self.cars.append(car)
-                car.set_start(i)
-                return 1
+                if (self.places[i - 1] == 0 or self.places[(i + 1) % len(self.places)] == 0 or
+                        i in {0, len(self.places) - 1}):
+                    self.places[i] = car
+                    self.cars.append(car)
+                    car.set_start(i)
+                    return 1
+                elif (2 * self.tag - self.places[place - 1].get_len()
+                      - self.places[place + 1].get_len() >= 2 * self.cars[car_i].get_width()):
+                    self.places[i] = car
+                    self.cars.append(car)
+                    car.set_start(i)
+                    return 1
         return 0
 
     def remove_car(self, car_i):
