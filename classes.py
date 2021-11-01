@@ -30,6 +30,10 @@ class Car:
         return self.time
 
 
+def r_2(num):
+    return round(num * 100) / 100
+
+
 class ParkingLot:
     def __init__(self, length):
         self.length = length
@@ -62,14 +66,16 @@ class ParkingLot:
 
     def take_place(self, car, position):
         for i in range(len(self.places)):
-            if self.places[i][0] <= position <= sum(self.places[i]):
-                if self.places[i][1] >= car.get_space():
-                    if car.get_len() + position <= sum(self.places[i]):
+            if self.places[i][0] <= r_2(position) <= r_2(sum(self.places[i])):
+                if self.places[i][1] >= r_2(car.get_space()):
+                    if r_2(car.get_len() + position) <= r_2(sum(self.places[i])):
                         self.cars.insert(i, car)
                         car.set_start(position)
                         self.places = self.places[:i:] + \
-                                      [(self.places[i][0], car.get_start() - self.places[i][0]),
-                                       (car.get_end(), sum(self.places[i]) - car.get_end())] + \
+                                      [(self.places[i][0],
+                                        r_2(car.get_start() - self.places[i][0])),
+                                       (r_2(car.get_end()), r_2(sum(self.places[i]) -
+                                                                car.get_end()))] + \
                                       self.places[i + 1:]
                         return 1
                 break
@@ -78,8 +84,8 @@ class ParkingLot:
     def remove_car(self, car_i):
         car_i = car_i % len(self.cars)
         self.places = self.places[:car_i] + \
-                      [(self.places[car_i][0], self.places[car_i][1] +
-                        self.places[car_i + 1][1] + self.cars[car_i].get_len())] + \
+                      [(r_2(self.places[car_i][0]), r_2(self.places[car_i][1] +
+                        self.places[car_i + 1][1] + self.cars[car_i].get_len()))] + \
                       self.places[car_i + 2:]
 
         self.cars.pop(car_i)

@@ -145,3 +145,7 @@ def optimal_timeless_park_to_target(car, lot, target, same_dist=0, c=1):
 
 def remove_car(lot, index):
     lot.remove_car(index)
+
+
+def to_minutes(hours, minutes):
+    return hours * 60 + minutes

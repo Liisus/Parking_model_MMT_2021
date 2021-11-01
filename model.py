@@ -3,7 +3,7 @@ from functions import *
 from random import randint, choice, random
 
 cap = randint(24, 24)
-parking_length = 6.5 * cap
+parking_length = 650 * cap
 car_len = [3.7, 4.8]
 car_wid = [1.5, 1.8]
 
