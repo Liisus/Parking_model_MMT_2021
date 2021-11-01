@@ -131,8 +131,8 @@ class TaggedLot:
                     self.cars.append(car)
                     car.set_start(i)
                     return 1
-                elif (2 * self.tag - self.places[place - 1].get_len()
-                      - self.places[place + 1].get_len() >= 2 * self.cars[car_i].get_width()):
+                elif (2 * self.tag - self.places[i - 1].get_len()
+                      - self.places[i + 1].get_len() >= 2 * car.get_width()):
                     self.places[i] = car
                     self.cars.append(car)
                     car.set_start(i)
