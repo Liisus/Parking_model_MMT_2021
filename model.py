@@ -35,7 +35,7 @@ for i in range(days):
 
                     temp_car = Car(randint(round(car_len[0] * 10), round(car_len[1] * 10)) / 10,
                                    randint(round(car_wid[0] * 10), round(car_wid[1] * 10)) / 10,
-                                   time=j + randint(interval[2], interval[3]))
+                                   time=(j + randint(interval[2], interval[3])) % 1440)
                     temp_beh = choice(behavior)
                     temp_targ = choice(behavior_start) * randint(0, round(parking_length * 10)) / 10
                     temp_st = choice(behavior_start)
