@@ -10,7 +10,7 @@ f = open('model_4_special_for_Roma.txt', 'w')
 for k in range(1):
     count = 0
     s = []
-    parking_length = randint(250, 1200)
+    parking_length = randint(25, 130)
     car_len = [3.7, 4.8]
     car_wid = [1.5, 1.8]
 
@@ -66,7 +66,7 @@ for k in range(1):
 
                         temp_car = Car(randint(round(car_len[0] * 10), round(car_len[1] * 10)) / 10,
                                        randint(round(car_wid[0] * 10), round(car_wid[1] * 10)) / 10,
-                                       time=j + randint(interval[2], interval[3]))
+                                       time=(j + randint(interval[2], interval[3])) % 1440)
                         temp_beh = choice(behavior)
                         temp_targ = choice(behavior_start) * randint(0,
                                                                      round(parking_length * 10)) / 10

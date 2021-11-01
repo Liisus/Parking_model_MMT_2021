@@ -8,7 +8,7 @@ l_lens, l_cars = 0, 0
 f = open('model_4.txt', 'w')
 
 for k in range(1000):
-    parking_length = randint(25, 120)
+    parking_length = randint(25, 130)
     car_len = [3.7, 4.8]
     car_wid = [1.5, 1.8]
 
@@ -40,7 +40,7 @@ for k in range(1000):
         (to_minutes(19, 0), to_minutes(21, 0), to_minutes(0, 30), to_minutes(2, 0), 0.2),
     ], [
         (to_minutes(0, 0), to_minutes(1, 0), to_minutes(11, 0), to_minutes(12, 30), 0.03),
-        (to_minutes(12, 0), to_minutes(13, 30), to_minutes(11, 0), to_minutes(13, 0), 0.8),
+        (to_minutes(12, 0), to_minutes(13, 30), to_minutes(11, 0), to_minutes(13, 0), 0.08),
 
         # Посетители магазина
         (to_minutes(23, 0), to_minutes(5, 59), to_minutes(0, 5), to_minutes(0, 20), 0.05),
@@ -68,7 +68,7 @@ for k in range(1000):
 
                         temp_car = Car(randint(round(car_len[0] * 10), round(car_len[1] * 10)) / 10,
                                        randint(round(car_wid[0] * 10), round(car_wid[1] * 10)) / 10,
-                                       time=j + randint(interval[2], interval[3]))
+                                       time=(j + randint(interval[2], interval[3])) % 1440)
                         temp_beh = choice(behavior)
                         temp_targ = choice(behavior_start) * randint(0,
                                                                      round(parking_length * 10)) / 10
