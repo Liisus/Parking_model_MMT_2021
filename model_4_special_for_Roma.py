@@ -7,10 +7,10 @@ l_lens, l_cars = 0, 0
 
 f = open('model_4_special_for_Roma.txt', 'w')
 
-for k in range(1):
+for k in range(12):
     count = 0
-    s = [0] * 1440
-    parking_length = randint(25, 120)
+    s = []
+    parking_length = randint(250, 1200)
     car_len = [3.7, 4.8]
     car_wid = [1.5, 1.8]
 
@@ -42,7 +42,7 @@ for k in range(1):
         (to_minutes(19, 0), to_minutes(21, 0), to_minutes(0, 30), to_minutes(2, 0), 0.2),
     ], [
         (to_minutes(0, 0), to_minutes(1, 0), to_minutes(11, 0), to_minutes(12, 30), 0.03),
-        (to_minutes(12, 0), to_minutes(13, 30), to_minutes(11, 0), to_minutes(13, 0), 0.8),
+        (to_minutes(12, 0), to_minutes(13, 30), to_minutes(11, 0), to_minutes(13, 0), 0.08),
 
         # Посетители магазина
         (to_minutes(23, 0), to_minutes(5, 59), to_minutes(0, 5), to_minutes(0, 20), 0.05),
@@ -83,9 +83,7 @@ for k in range(1):
                     car_i -= 1
                 car_i += 1
 
-            s[j] += len(lot.get_cars())
+            s[j].append(len(lot.get_cars()))
         count += 1
 
-    for l in range(len(s)):
-        s[l] /= count
     print(f'parking_length: {parking_length} - {s}', file=f)
