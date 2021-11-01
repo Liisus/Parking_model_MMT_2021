@@ -7,7 +7,7 @@ l_lens, l_cars = 0, 0
 
 f = open('model_4_special_for_Roma.txt', 'w')
 
-for k in range(12):
+for k in range(1):
     count = 0
     s = []
     parking_length = randint(250, 1200)
@@ -83,7 +83,7 @@ for k in range(12):
                     car_i -= 1
                 car_i += 1
 
-            s[j].append(len(lot.get_cars()))
+            s.append(len(lot.get_cars()))
         count += 1
 
     print(f'parking_length: {parking_length} - {s}', file=f)
