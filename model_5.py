@@ -6,6 +6,7 @@ from random import randint, choice, shuffle
 div, l_div = 0, 0
 counter = 0
 
+f = open('model_5.txt', 'w')
 
 for k in range(1000):
     cap = randint(15, 35)
@@ -28,13 +29,29 @@ for k in range(1000):
     i0, i1 = min(i0, i1), max(i0, i1)
     behavior_start = [0, 1][i0:i1 + 1]
 
-    intervals = [(940, 1100, 3, 7, 0.10), (440, 500, 3, 7, 0.10),
-                 (1230, 660, 30, 150, 0.01), (660, 1230, 30, 60, 0.65),
-                 (440, 500, 500, 600, 0.10), (1200, 1260, 600, 660, 0.012),
-                 (1200, 1260, 3, 7, 0.012), (330, 390, 3, 7, 0.012)]
-    i1 = randint(0, len(intervals) - 1)
-    shuffle(intervals)
-    intervals = intervals[0:i1 + 1]
+    timetables = [[
+        (to_minutes(8, 0), to_minutes(8, 30), to_minutes(8, 0), to_minutes(9, 0), 0.9),
+
+        (to_minutes(9, 0), to_minutes(19, 0), to_minutes(0, 3), to_minutes(0, 5), 0.2),
+        (to_minutes(17, 0), to_minutes(23, 30), to_minutes(0, 30), to_minutes(2, 0), 0.1),
+    ], [
+        (to_minutes(17, 30), to_minutes(20, 0), to_minutes(11, 0), to_minutes(14, 0), 0.8),
+
+        (to_minutes(10, 0), to_minutes(18, 0), to_minutes(0, 5), to_minutes(0, 15), 0.3),
+        (to_minutes(8, 0), to_minutes(19, 0), to_minutes(0, 15), to_minutes(1, 30), 0.1),
+        (to_minutes(19, 0), to_minutes(21, 0), to_minutes(0, 30), to_minutes(2, 0), 0.2),
+    ], [
+        (to_minutes(0, 0), to_minutes(1, 0), to_minutes(11, 0), to_minutes(12, 30), 0.03),
+        (to_minutes(12, 0), to_minutes(13, 30), to_minutes(11, 0), to_minutes(13, 0), 0.8),
+
+        # Посетители магазина
+        (to_minutes(23, 0), to_minutes(5, 59), to_minutes(0, 5), to_minutes(0, 20), 0.05),
+        (to_minutes(6, 0), to_minutes(16, 59), to_minutes(0, 3), to_minutes(0, 30), 0.2),
+        (to_minutes(17, 0), to_minutes(18, 59), to_minutes(0, 10), to_minutes(1, 15), 0.3),
+        (to_minutes(19, 0), to_minutes(22, 59), to_minutes(0, 5), to_minutes(0, 15), 0.2),
+    ]]
+
+    intervals = choice(timetables)
 
     days = 365
 
@@ -90,10 +107,23 @@ for k in range(1000):
                 t_counts += 1
 
         div += (caps / counts) / (t_caps / t_counts)
+        p = 0
         if l_counts and l_t_counts:
+            p = (l_caps / l_counts) / (l_t_caps / l_t_counts)
             l_div += (l_caps / l_counts) / (l_t_caps / l_t_counts)
         counter += 0
+
+        print(f'parking_cap: {cap};'
+              f'behavior: {[i.__name__ for i in behavior]};'
+              f'same_dist: {behavior_dist};'
+              f'to_start: {behavior_start};'
+              f'times: {intervals};'
+              f'limits: [{limit_0}..{limit_1}];'
+              f'div: {(caps / counts) / (t_caps / t_counts)}'
+              f'limited div: {p}', file=f)
 
 
 print(div / counter, '- average increase of car for 1m')
 print(l_div / counter, '- average limited increase of car for 1m')
+print(div / counter, '- average increase of car for 1m', file=f)
+print(l_div / counter, '- average limited increase of car for 1m', file=f)

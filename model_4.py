@@ -7,8 +7,8 @@ l_lens, l_cars = 0, 0
 
 f = open('model_4.txt', 'w')
 
-for k in range(1):
-    parking_length = randint(25, 90)
+for k in range(1000):
+    parking_length = randint(25, 120)
     car_len = [3.7, 4.8]
     car_wid = [1.5, 1.8]
 
@@ -102,7 +102,8 @@ for k in range(1):
           f'to_start: {behavior_start};'
           f'times: {intervals};'
           f'limits: [{limit_0}..{limit_1}];'
-          f'average: {caps / counts}', file=f)
+          f'average: {caps / counts}',
+          f'limited average: {l_caps / l_counts}', file=f)
 
 print(cars / lens, 'cars for 1m (average)', file=f)
 print(l_cars / lens, 'cars for 1m (average limited)', file=f)
