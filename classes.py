@@ -82,13 +82,18 @@ class ParkingLot:
         return 0
 
     def remove_car(self, car_i):
-        car_i = car_i % len(self.cars)
-        self.places = self.places[:car_i] + \
-                      [(r_2(self.places[car_i][0]), r_2(self.places[car_i][1] +
-                        self.places[car_i + 1][1] + self.cars[car_i].get_len()))] + \
-                      self.places[car_i + 2:]
+        if self.places[car_i][1] + self.places[car_i + 1][1] >=\
+                r_2(self.cars[car_i].get_width()) or car_i in {0, len(self.cars) - 1}:
+            car_i = car_i % len(self.cars)
+            self.places = self.places[:car_i] + \
+                          [(r_2(self.places[car_i][0]), r_2(self.places[car_i][1] +
+                                                            self.places[car_i + 1][1] + self.cars[
+                                                                car_i].get_len()))] + \
+                          self.places[car_i + 2:]
 
-        self.cars.pop(car_i)
+            self.cars.pop(car_i)
+            return 1
+        return 0
 
     def get_places(self):
         return self.places
@@ -101,29 +106,37 @@ class ParkingLot:
 
 
 class TaggedLot:
-    def __init__(self, num):
+    def __init__(self, num, tag=6.5):
         self.places = [0] * num
         self.cars = []
-        self.length = num * 6.5
+        self.length = num * tag
+        self.tag = tag
 
     def check_place(self, car, place, same_dist=0):
         if self.places[place]:
             return []
-        return [place * 6.5, place * 6.5]
+        return [place * self.tag, place * self.tag]
 
     def take_place(self, car, position):
         for i in range(len(self.places)):
-            if position == i * 6.5:
-                self.places[i] = 1
+            if position == i * self.tag:
+                self.places[i] = car
                 self.cars.append(car)
                 car.set_start(i)
                 return 1
         return 0
 
     def remove_car(self, car_i):
+        place = self.cars[car_i].get_start()
+        if ((self.places[place - 1] != 0) and self.places[(place + 1) % len(self.places)] != 0 and
+                place not in {0, len(self.places) - 1}):
+            if (2 * self.tag - self.places[place - 1].get_len() - self.places[place + 1].get_len() <
+                    2 * self.cars[car_i].get_width()):
+                return 0
         car_i = car_i % len(self.cars)
-        self.places[self.cars[car_i].get_start()] = 0
+        self.places[place] = 0
         self.cars.pop(car_i)
+        return 1
 
     def get_places(self):
         return self.places
