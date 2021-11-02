@@ -7,8 +7,8 @@ counter = 0
 
 f = open('model_5.txt', 'w')
 
-for k in range(500):
-    cap = randint(2, 11) * 2
+for k in range(300):
+    cap = randint(2, 13) * 2
     parking_length = 11 * cap // 2
     coeff = parking_length / 69
     car_len = [3.7, 4.8]
@@ -56,7 +56,7 @@ for k in range(500):
     days = 365
 
     lot = ParkingLot(parking_length)
-    tagged = TaggedLot(cap)
+    tagged = TaggedLot(cap, 5.5)
 
     limit_0, limit_1 = 540, 1260
     l_caps, l_t_caps = caps, t_caps = 0, 0
