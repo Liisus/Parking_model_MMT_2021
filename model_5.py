@@ -2,7 +2,8 @@ from classes import *
 from functions import *
 from random import randint, choice, shuffle
 
-div, l_div = 0, 0
+l_lens, l_cars = 0, 0
+lens, cars = 0, 0
 counter = 0
 
 f = open('model_5.txt', 'w')
@@ -56,7 +57,6 @@ for k in range(300):
 
     days = 365
 
-    lot = ParkingLot(parking_length)
     tagged = TaggedLot(cap, tag)
 
     limit_0, limit_1 = 540, 1260
@@ -78,27 +78,11 @@ for k in range(300):
                                                                      round(parking_length * 10)) / 10
                         temp_st = choice(behavior_start)
 
-                        if not temp_beh(temp_car, lot, temp_targ, same_dist=temp_st):
-                            l_counts += 1
-                            l_caps += len(lot.get_cars())
-
-                        temp_car = Car(randint(round(car_len[0] * 10), round(car_len[1] * 10)) / 10,
-                                       randint(round(car_wid[0] * 10), round(car_wid[1] * 10)) / 10,
-                                       time=(j + randint(interval[2], interval[3])) % 1440)
-
                         if not temp_beh(temp_car, tagged, temp_targ, same_dist=temp_st):
                             l_t_counts += 1
                             l_t_caps += len(tagged.get_cars())
 
             car_i = 0
-            while car_i < len(lot.get_cars()):
-                car = lot.get_cars()[car_i]
-                if car.get_time() <= j:
-                    if not remove_car(lot, car_i):
-                        car.time = (j + 1) % 1440
-                    else:
-                        car_i -= 1
-                car_i += 1
 
             while car_i < len(tagged.get_cars()):
                 car = tagged.get_cars()[car_i]
@@ -110,29 +94,25 @@ for k in range(300):
                 car_i += 1
 
             if limit_0 <= j <= limit_1:
-                caps += len(lot.get_cars())
-                counts += 1
-
                 t_caps += len(tagged.get_cars())
                 t_counts += 1
 
-    div += (caps / counts) / (t_caps / t_counts)
-    p = 0
-    if l_counts and l_t_counts:
-        p = (l_caps / l_counts) / (l_t_caps / l_t_counts)
-        l_div += (l_caps / l_counts) / (l_t_caps / l_t_counts)
-    counter += 1
+    lens += parking_length
+    cars += t_caps / t_counts
 
-    print(f'parking_cap: {cap};'
+    if l_counts:
+        l_cars += l_t_caps / l_t_counts
+
+    print(f'parking_length: {parking_length};'
           f'behavior: {[i.__name__ for i in behavior]};'
           f'same_dist: {behavior_dist};'
           f'to_start: {behavior_start};'
           f'times: {intervals};'
           f'limits: [{limit_0}..{limit_1}];'
-          f'div: {(caps / counts) / (t_caps / t_counts)};'
-          f'limited div: {p}', file=f)
+          f'average: {t_caps / t_counts}',
+          f'limited average: {l_t_caps / l_t_counts}', file=f)
 
-print(div / counter, '- average increase of car for 1m')
-print(l_div / counter, '- average limited increase of car for 1m')
-print(div / counter, '- average increase of car for 1m', file=f)
-print(l_div / counter, '- average limited increase of car for 1m', file=f)
+print(cars / lens, 'cars for 1m (average)', file=f)
+print(l_cars / lens, 'cars for 1m (average limited)', file=f)
+print(cars / lens, 'cars for 1m (average)')
+print(l_cars / lens, 'cars for 1m (average limited)')
