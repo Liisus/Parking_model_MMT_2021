@@ -115,12 +115,12 @@ for k in range(300):
                 t_caps += len(tagged.get_cars())
                 t_counts += 1
 
-        div += (caps / counts) / (t_caps / t_counts)
-        p = 0
-        if l_counts and l_t_counts:
-            p = (l_caps / l_counts) / (l_t_caps / l_t_counts)
-            l_div += (l_caps / l_counts) / (l_t_caps / l_t_counts)
-        counter += 1
+    div += (caps / counts) / (t_caps / t_counts)
+    p = 0
+    if l_counts and l_t_counts:
+        p = (l_caps / l_counts) / (l_t_caps / l_t_counts)
+        l_div += (l_caps / l_counts) / (l_t_caps / l_t_counts)
+    counter += 1
 
     print(f'parking_cap: {cap};'
           f'behavior: {[i.__name__ for i in behavior]};'
